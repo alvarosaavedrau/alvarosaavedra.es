@@ -1,7 +1,7 @@
 export default {
     logo: <span>My Nextra Documentation</span>,
     project: {
-      link: 'https://github.com/alvarosaavedrau'
+      link: 'https://github.com/alvarosaavedrau/alvarosaavedra.es',
     },
     docsRepositoryBase: 'https://github.com/shuding/nextra/tree/main/docs',
     useNextSeoProps() {
