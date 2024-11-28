@@ -1,0 +1,65 @@
+# Comandos útiles de OCP
+
+## Abreviaciones objetos de OCP
+
+<details>
+<summary><i>Expandir comandos</i></summary>
+
+* buildconfig: `bc`
+* builds: `build`
+* configmaps: `cm`
+* clusterrolebinding: `crb`
+* clusterroles: `cr`
+* cronjobs: `cj`
+* daemonsets: `ds`
+* deploymentconfigs: `dc`
+* deployments: `deploy`
+* endpoints: `ep`
+* horizontalpodautoscalers: `hpa`
+* imagestreamtags: `istag`
+* imagestreams: `is`
+* ingresses: `ing`
+* jobs: `job`
+* namespaces: `ns`
+* nodes: `no / node`
+* persistentvolumeclaims: `pvc`
+* persistentvolumes: `pv`
+* pods: `po / pod`
+* replicasets: `rs`
+* replicationcontrollers: `rc`
+* routes: `route`
+* secrets: `secret`
+* serviceaccounts: `sa`
+* services: `svc`
+* statefulsets: `sts`
+* projects: `project`
+* roles: `role`
+* rolebindings: `rb`
+* serviceaccounts: `sa`
+* templates: `template`
+
+</details>
+
+## Configurar y probar acceso a AWS desde un pod de OCP
+
+1. Descargar binario AWS cli (desde el pod). Se utiliza `more` en lugar de `less` ya que no viene instalado por defecto.
+
+```sh
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+./aws/install
+echo "se crea el alias 'aws' apuntando a './aws/dist/aws'"
+alias aws="./aws/dist/aws"
+PAGER=more
+export PAGER
+```
+
+2. Configurar credenciales.
+
+```sh
+aws sts assume-role --role-arn arn:aws:iam::<AWS_ACCOUNT_ID>:role/<AWS_ROLE_NAME> --role-session-name PRUEBA1 --external-id "<EXTERNAL_ID>"
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+export AWS_SESSION_TOKEN=
+aws sts get-caller-identity
+```

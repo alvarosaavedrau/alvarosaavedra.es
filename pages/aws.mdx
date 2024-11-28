@@ -1,0 +1,32 @@
+# Comandos útiles de AWS
+
+## Listar el contenido de un S3
+Si no se quiere listar el contenido de manera recursiva eliminar la opción `--recursive`.
+
+```sh
+➜ aws s3 ls --recursive <BUCKET_NAME>
+```
+
+## Descargar el contenido de un S3
+
+```sh
+➜ aws s3 cp s3://<BUCKET_NAME>/<S3_PATH_TO_OBJECT> .
+```
+
+## Comprobar el estado de restauración de un objeto en un s3
+
+```sh
+➜ aws s3api head-object --bucket <BUCKET_NAME> --key <KEY_OBJECT>
+```
+
+## Configurar AWS CLI
+
+```sh
+➜ aws configure sso
+```
+
+### Volver a hacer login
+
+```sh
+➜ aws sso login --profile <PROFILE_NAME>
+```
