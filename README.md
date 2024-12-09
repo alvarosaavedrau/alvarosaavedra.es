@@ -11,3 +11,7 @@ npm install     # Instalar dependencias
 npm run dev     # Iniciar el proyecto en modo desarrollo
 npm run build   # Compilar el proyecto para producción
 ```
+
+## 📝 Licencia
+
+Este proyecto está bajo la licencia MIT. https://github.com/shuding/nextra
