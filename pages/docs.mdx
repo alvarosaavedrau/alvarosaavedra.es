@@ -4,26 +4,26 @@ En esta página encontrarás documentación y recursos que puedan ser útiles.
 
 #### Generar terraform.tfvars.json desde terraform.tfvars
 
-    ```shell showLineNumbers
+    ```shell showLineNumbers filename="> Terminal"
     docker run --rm -v $(pwd):/tmp tmccombs/hcl2json /tmp/terraform.tfvars > /tmp/terraform.tfvars.json
     ```
 
 #### Generar README.md terraform-docs.
 
-    ```shell showLineNumbers
+    ```shell showLineNumbers filename="> Terminal"
     docker run --rm --volume "$(pwd):/terraform-docs" -u $(id -u) quay.io/terraform-docs/terraform-docs:latest markdown /terraform-docs > README.md
     ```
 
 #### Análisis de código terraform con tflint
 
-    ```shell showLineNumbers
+    ```shell showLineNumbers filename="> Terminal"
     docker run --rm -v $(pwd):/data -t ghcr.io/terraform-linters/tflint
     ```
 
 #### Formatear código terraform con terraform fmt
 
 
-    ```shell showLineNumbers
+    ```shell showLineNumbers filename="> Terminal"
     terraform fmt -recursive
     ```
 
@@ -31,7 +31,7 @@ En esta página encontrarás documentación y recursos que puedan ser útiles.
 
 Ten en cuenta que el comando `terraform workspace delete -force <old-name>` **eliminará permanentemente** el workspace y su archivo tfvars. Aunque el archivo tfstate ya habrá sido migrado al nuevo workspace (por lo que no se pierde), el historial del tfstate asociado al workspace original se perderá definitivamente.
 
-    ```shell { 5 } showLineNumbers
+    ```shell { 5 } showLineNumbers filename="> Terminal"
     terraform workspace select <old-name>
     terraform state pull > terraform.tfstate
     terraform workspace select -or-create <new-name>
