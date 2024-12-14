@@ -4,11 +4,15 @@ En esta página encontrarás documentación y recursos que puedan ser útiles so
 
 #### Generar terraform.tfvars.json desde terraform.tfvars
 
+Imagen de docker para generar un fichero `terraform.tfvars.json` a partir de un fichero `terraform.tfvars`.
+
     ```shell showLineNumbers filename="> Terminal"
     docker run --rm -v $(pwd):/tmp tmccombs/hcl2json /tmp/terraform.tfvars > /tmp/terraform.tfvars.json
     ```
 
-#### Generar README.md terraform-docs.
+#### Generar README.md terraform-docs
+
+Generar documentación en formato markdown a partir de los ficheros de terraform. Muy útil para mantener la documentación de un proyecto terraform de manera fácil.
 
     ```shell showLineNumbers filename="> Terminal"
     docker run --rm --volume "$(pwd):/terraform-docs" -u $(id -u) quay.io/terraform-docs/terraform-docs:latest markdown /terraform-docs > README.md
@@ -16,12 +20,15 @@ En esta página encontrarás documentación y recursos que puedan ser útiles so
 
 #### Análisis de código terraform con tflint
 
+[tflint](https://github.com/terraform-linters/tflint) es una herramienta para analizar el código de terraform y detectar errores o mejoras de tu código de Terraform.
+
     ```shell showLineNumbers filename="> Terminal"
     docker run --rm -v $(pwd):/data -t ghcr.io/terraform-linters/tflint
     ```
 
 #### Formatear código terraform con terraform fmt
 
+🚨 **¡Usa este comando antes de commitear tus cambios en el código de terraform!** Esto asegura que el código de terraform esté bien formateado.
 
     ```shell showLineNumbers filename="> Terminal"
     terraform fmt -recursive
