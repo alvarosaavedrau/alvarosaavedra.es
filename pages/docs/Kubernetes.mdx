@@ -2,6 +2,8 @@
 
 Esta página está dedicada a almacenar yamls e información útil sobre Kubernetes. ~Si, por no ir a la página oficial de Kubernetes~ 😬.
 
+### YAMLs con ejemplos
+
 #### Namespace
 
 Los namespace se usan para organizar los recursos de Kubernetes. Si se tienen varios proyectos o equipos trabajando en un mismo cluster, es recomendable usar namespaces para separar los recursos.
@@ -127,4 +129,12 @@ spec:
       - name: example
         image: busybox
         command: ["sh", "-c", "while true; do echo Hello from DaemonSet; sleep 10; done"]
+```
+
+### Comandos útiles
+
+#### Instalar metrics-server
+
+```bash showLineNumbers filename="> Terminal"
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 ```
