@@ -2,6 +2,9 @@ export default {
     '*': {
         type: 'page',
     },
+    index: {
+        title: 'Inicio',
+    },
     docs: {
         title: 'Documentación',
         type: 'menu',
