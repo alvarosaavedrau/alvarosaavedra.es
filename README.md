@@ -1,10 +1,10 @@
 # alvarosaavedra.es
 
-Página web de Álvaro Saavedra de la Peña Úbeda, usada para trastear con herramientas.
+Página web de Álvaro Saavedra de la Peña Úbeda, usada para documentar cosas del día a día. Nada profesional.
 
 ## 🚀 Inicio
 
-Para iniciar el proyecto, ejecutar:
+Para iniciar el proyecto:
 
 ```bash
 npm install     # Instalar dependencias
