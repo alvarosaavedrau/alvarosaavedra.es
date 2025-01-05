@@ -8,17 +8,22 @@ Esta página está dedicada a almacenar yamls e información útil sobre Kuberne
 
 Los namespace se usan para organizar los recursos de Kubernetes. Si se tienen varios proyectos o equipos trabajando en un mismo cluster, es recomendable usar namespaces para separar los recursos.
 
+<details closed>
+  <summary>Click para ver</summary>
 ```yaml showLineNumbers
 apiVersion: v1
 kind: Namespace
 metadata:
   name: my-namespace
 ```
+</details>
 
 #### Deployment
 
 El deployment es un controlador de Kubernetes que administra un conjunto de replicas de un pod.
 
+<details closed>
+  <summary>Click para ver</summary>
 ```yaml showLineNumbers
 apiVersion: apps/v1
 kind: Deployment
@@ -40,11 +45,14 @@ spec:
         ports:
         - containerPort: 80
 ```
+</details>
 
 #### Service
 
 El servicio es un recurso de Kubernetes que expone una aplicación a través de una dirección IP (interna del cluster) y un puerto.
 
+<details closed>
+  <summary>Click para ver</summary>
 ```yaml showLineNumbers
 apiVersion: v1
 kind: Service
@@ -59,11 +67,14 @@ spec:
     port: 80
     targetPort: 80
 ```
+</details>
 
 #### Pod
 
 Un pod es la unidad más pequeña de Kubernetes, que puede contener uno o varios contenedores.
 
+<details closed>
+  <summary>Click para ver</summary>
 ```yaml showLineNumbers
 apiVersion: v1
 kind: Pod
@@ -78,11 +89,14 @@ spec:
     ports:
     - containerPort: 80
 ```
+</details>
 
 #### ReplicaSet
 
 El ReplicaSet es un controlador de Kubernetes que garantiza que un número específico de réplicas de un pod estén en funcionamiento en todo momento.
 
+<details closed>
+  <summary>Click para ver</summary>
 ```yaml showLineNumbers
 apiVersion: apps/v1
 kind: ReplicaSet
@@ -106,11 +120,14 @@ spec:
         ports:
         - containerPort: 80
 ```
+</details>
 
 #### DaemonSet
 
 El DaemonSet es un controlador de Kubernetes que garantiza que todos los nodos del clúster ejecuten una copia de un pod. Es útil para tareas de monitoreo o logging.
 
+<details closed>
+  <summary>Click para ver</summary>
 ```yaml showLineNumbers
 apiVersion: apps/v1
 kind: DaemonSet
@@ -130,11 +147,12 @@ spec:
         image: busybox
         command: ["sh", "-c", "while true; do echo Hello from DaemonSet; sleep 10; done"]
 ```
+</details>
 
 ### Comandos útiles
 
 #### Instalar metrics-server
 
-```bash showLineNumbers filename="> Terminal"
+```bash showLineNumbers
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 ```
