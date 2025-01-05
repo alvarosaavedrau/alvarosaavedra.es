@@ -6,7 +6,7 @@ En esta página encontrarás documentación y recursos que puedan ser útiles so
 
 Imagen de docker para generar un fichero `terraform.tfvars.json` a partir de un fichero `terraform.tfvars`.
 
-    ```shell showLineNumbers filename="> Terminal"
+    ```shell showLineNumbers
     docker run --rm -v $(pwd):/tmp tmccombs/hcl2json /tmp/terraform.tfvars > /tmp/terraform.tfvars.json
     ```
 
@@ -14,7 +14,7 @@ Imagen de docker para generar un fichero `terraform.tfvars.json` a partir de un 
 
 Generar documentación en formato markdown a partir de los ficheros de terraform. Muy útil para mantener la documentación de un proyecto terraform de manera fácil.
 
-    ```shell showLineNumbers filename="> Terminal"
+    ```shell showLineNumbers
     docker run --rm --volume "$(pwd):/terraform-docs" -u $(id -u) quay.io/terraform-docs/terraform-docs:latest markdown /terraform-docs > README.md
     ```
 
@@ -22,7 +22,7 @@ Generar documentación en formato markdown a partir de los ficheros de terraform
 
 [tflint](https://github.com/terraform-linters/tflint) es una herramienta para analizar el código de terraform y detectar errores o mejoras de tu código de Terraform.
 
-    ```shell showLineNumbers filename="> Terminal"
+    ```shell showLineNumbers
     docker run --rm -v $(pwd):/data -t ghcr.io/terraform-linters/tflint
     ```
 
@@ -30,7 +30,7 @@ Generar documentación en formato markdown a partir de los ficheros de terraform
 
 🚨 **¡Usa este comando antes de commitear tus cambios en el código de terraform!** Esto asegura que el código de terraform esté bien formateado.
 
-    ```shell showLineNumbers filename="> Terminal"
+    ```shell showLineNumbers
     terraform fmt -recursive
     ```
 
@@ -38,7 +38,7 @@ Generar documentación en formato markdown a partir de los ficheros de terraform
 
 Ten en cuenta que el comando `terraform workspace delete -force <old-name>` **eliminará permanentemente** el workspace y su archivo tfvars. Aunque el archivo tfstate ya habrá sido migrado al nuevo workspace (por lo que no se pierde), el historial del tfstate asociado al workspace original se perderá definitivamente.
 
-    ```shell { 5 } showLineNumbers filename="> Terminal"
+    ```shell { 5 } showLineNumbers
     terraform workspace select <old-name>
     terraform state pull > terraform.tfstate
     terraform workspace select -or-create <new-name>
