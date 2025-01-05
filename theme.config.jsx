@@ -61,5 +61,16 @@ export default {
 
     editLink: {
         component: null
+    },
+
+    toc: {
+        backToTop: function BackToTop() {
+            return (
+                <a href="#table-of-contents">
+                    Volver arriba
+                </a>
+            )
+        },
+        float: true
     }
 }
