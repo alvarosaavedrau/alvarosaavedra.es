@@ -44,4 +44,13 @@ export default {
     },
 
     faviconGlyph: '☁️',
+
+    color: {
+        hue: 0,
+        saturation: 0,
+        lightness: {
+            dark: 100,
+            light: 50
+        }
+    }
 }
