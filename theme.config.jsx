@@ -52,5 +52,14 @@ export default {
             dark: 100,
             light: 50
         }
+    },
+
+    feedback: {
+        content: 'Dame feedback en GitHub 🔗',
+        labels: 'feedback',
+    },
+
+    editLink: {
+        component: null
     }
 }
