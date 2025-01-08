@@ -1,0 +1,50 @@
+import { Steps } from 'nextra/components'
+
+# Kubernetes homelab
+
+En este artículo te voy a contar como he creado un cluster de Kubernetes en mi casa.
+
+## ¿Qué se necesita?
+
+Para instalar Kubernetes simulando un entorno real, mínimo es necesario tener 2 ordenadores: uno como control plane (nodo master) y otro como nodo worker (nodo worker). En entornos de producción, se recomienda tener al menos 3 nodos master, si uno de ellos se cae que no muera el cluster entero. De la misma manera con los nodos worker.
+
+
+## Hardware utilizado
+
+Yo he utilizado dos ordenadores, uno como nodo master y otro como nodo worker.
+
+| Equipo usado     | Tipo nodo | Memoria | CPU    | Disco | Sistema operativo instalado               |
+|------------------|-----------|---------|--------|-------|-------------------------------------------|
+| ThinkPad T450    | master    | 16GB    | 2 CPU  | 250GB | Debian 12 (bookworm)                      |
+| HP Compaq dc7800 | worker    | 4GB     | 2 CPU  | 160GB | Ubuntu server 22.04 LTS (Jammy Jellyfish) |
+
+Cuando estuve leyendo sobre que sistema operativo usar para el nodo worker encontré este hilo en reddit https://www.reddit.com/r/kubernetes/comments/186l0ek/the_best_os_for_kubernetes/?tl=es-es y me picó el gusanillo por usar [Talos Linux](https://www.talos.dev), el sistema operativo adecuado para Kubernetes (según ese hilo).
+
+**¿Por qué no lo he usado, si tan bueno parece?**
+
+Talos Linux no te permite usar una terminal para poder instalar lo que tu quieras, simplemente viene optimizado para Kubernetes y a funcionar. En el caso del ThinkPad este le uso para más cosas, le utilizo como ordenador personal para alojar mis repositorios de GitHub, conectarme a otros servidores, etc. En el caso del HP Compaq **no he sido capaz de instalar Talos Linux**, tendré que investigar más a fondo y crear una 2ª parte de esta página.
+
+## Pasos seguidos
+
+### Nodo control plane
+
+#### Instalar kubectl
+
+Kubectl es una herramienta de línea de comandos que nos permite interactuar con el cluster de Kubernetes. Es la herramienta recomendada por Kubernetes aunque hay algunas alternativas como `k9s`, `kubectx`, `kubens`, etc.
+
+<Steps>
+#### Instalar el binario
+
+Para instalar kubectl he seguido la [documentación oficial de Kubernetes](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/):
+
+```shell showLineNumbers
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+```
+
+#### Comprobamos que se ha instalado correctamente:
+
+```shell showLineNumbers
+kubectl version --client
+```
+</Steps>

@@ -26,6 +26,10 @@ export default {
             'Cloudflare Workers': {
                 title: 'Cloudflare Workers',
                 href: '/blog/cloudflareworkers',
+            },
+            'Kubernetes homelab': {
+                title: 'Kubernetes homelab',
+                href: '/blog/kubernetes-homelab',
             }
         }
     },
