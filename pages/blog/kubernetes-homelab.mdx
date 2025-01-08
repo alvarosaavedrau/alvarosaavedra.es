@@ -1,4 +1,5 @@
 import { Steps } from 'nextra/components'
+import { Callout } from 'nextra/components'
 
 # Kubernetes homelab
 
@@ -35,7 +36,11 @@ Kubectl es una herramienta de línea de comandos que nos permite interactuar con
 <Steps>
 #### Instalar el binario
 
-Para instalar kubectl he seguido la [documentación oficial de Kubernetes](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/):
+Para instalar kubectl he seguido la [documentación oficial de Kubernetes](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
+
+<Callout type="info" emoji="ℹ️">
+  Los comandos inferiores son para instalar el binario. También puede hacer con la herramienta de paquetes de Kubernetes (apt, yum, etc.).
+</Callout>
 
 ```shell showLineNumbers
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
