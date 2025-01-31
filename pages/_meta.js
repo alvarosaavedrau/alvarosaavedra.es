@@ -16,6 +16,10 @@ export default {
             kubernetes: {
                 title: 'Kubernetes',
                 href: '/docs/kubernetes'
+            },
+            git: {
+                title: 'Git',
+                href: '/docs/git'
             }
         }
     },

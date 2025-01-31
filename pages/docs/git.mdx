@@ -1,0 +1,25 @@
+import { Callout } from 'nextra/components'
+
+# Git
+
+#### Volver a un commit anterior sin dejar rastro
+
+Obtener el id del commit al que quieres volver, esto puedes hacerlo con el comando `git log`.
+
+    ```shell showLineNumbers
+    git reset --hard <id_commit>
+    git push --force
+    ```
+
+<Callout type="warning">
+    Se volverá al commit indicado y se perderán todos los cambios que se hayan hecho después de ese commit.
+</Callout>
+
+#### Volver a un commit anterior dejando rastro
+
+Obtener el id del commit al que quieres volver, esto puedes hacerlo con el comando `git log`.
+
+    ```shell showLineNumbers
+    git revert <id_commit>..HEAD
+    git push
+    ```
