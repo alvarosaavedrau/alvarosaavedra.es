@@ -1,0 +1,192 @@
+import Image from 'next/image';
+import { Callout } from 'nextra/components'
+
+# CDN con CloudFront y S3
+
+## ¿Qué es el CDN?
+
+Un CDN (Content Delivery Network) es una red de servidores distribuidos en diferentes ubicaciones geográficas que trabajan juntos para entregar contenido web de forma rápida y eficiente a los usuarios.
+
+Imagina que tienes un sitio web con imágenes, videos, archivos CSS, etc. en un solo servidor. Cuando un usuario visita tu página, esos archivos deben viajar desde el servidor hasta el dispositivo del usuario. Si el servidor está lejos, la carga puede ser lenta. Con el CDN entregaremos la información al usuario de una forma mucho más rápida y cercana a él.
+
+Un CDN almacena copias de tu contenido en múltiples servidores alrededor del mundo (o donde tu eligas dependiendo del proveedor de cloud). Cuando un usuario accede a tu sitio, el CDN elige el servidor más cercano a su ubicación para entregar el contenido. Esto reduce la distancia que deben recorrer los datos.
+
+En resumen, un CDN es como tener una red de "mini servidores" ubicados por el mundo para asegurar que tu contenido llegue a los usuarios de manera rápida y eficiente, sin importar dónde se encuentren.
+
+## Montando un CDN con CloudFront y S3
+
+Vamos a empzar a jugar, vamos a ver como crear un CDN con [CloudFront](https://aws.amazon.com/es/cloudfront/) y [S3](https://aws.amazon.com/es/s3/) para almacenar los objetos (archivos) que queremos distribuir. Usaremos terraform para desplegar la infraestructura.
+
+Cuando despleguemos el CloudFront nos entregará una URL (xxxxxxx.cloudfront.net), esta es la URL que tenemos que usar para acceder a nuestros objetos.
+
+El código de terraform usado puedes encontrarlo en: [github.com/alvarosaavedrau/cdn.alvarosaavedra.es](https://github.com/alvarosaavedrau/cdn.alvarosaavedra.es)
+
+### Creando el S3
+
+El S3 es el objeto para almacenar los objetos que queremos entregar. Si deseas acceder a los ficheros mediante un dominio personalizado, el nombre del S3 debe ser este nombre de dominio. Si no quieres usar un dominio personalizado y accederás a tus objetos mediante la URL generada por CloudFront, el nombre del S3 puede ser el que tú quieras. En este caso quiero acceder mediante `cdn.alvarosaavedra.es` asi que el nombre de mi S3 será este.
+
+En el S3 tenemos que configurar los permisos adecuados para que el CloudFront pueda acceder a los objetos, es buena práctica configurar los permisos de manera que solo el CloudFront tenga acceso a los objetos.
+
+<details closed>
+  <summary>Click para ver el código de S3 y la política</summary>
+```terraform
+resource "aws_s3_bucket" "s3" {
+  bucket = "cdn.alvarosaavedra.es"
+}
+
+resource "aws_s3_bucket_public_access_block" "s3" {
+  bucket = aws_s3_bucket.s3.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+
+  depends_on = [aws_s3_bucket.s3]
+}
+
+resource "aws_s3_bucket_policy" "s3CDN" {
+  bucket = "cdn.alvarosaavedra.es"
+  policy = data.aws_iam_policy_document.s3CDNPolicy.json
+
+  depends_on = [aws_s3_bucket.s3]
+}
+
+data "aws_caller_identity" "accountID" {}
+
+data "aws_iam_policy_document" "s3CDNPolicy" {
+  statement {
+    sid    = "AllowCloudFrontServicePrincipalReadOnly"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
+    }
+
+    actions = [
+      "s3:GetObject"
+    ]
+
+    resources = [
+      "arn:aws:s3:::${aws_s3_bucket.s3.bucket}/*"
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+      values   = ["arn:aws:cloudfront::${data.aws_caller_identity.accountID.account_id}:distribution/${aws_cloudfront_distribution.s3CDN.id}"]
+    }
+  }
+}
+```
+</details>
+
+### Creando el CloudFront y certificado ACM
+
+AWS nos permite crear un certificado de manera gratuita con el servicio [ACM](https://aws.amazon.com/es/certificate-manager/).
+
+<details closed>
+  <summary>Click para ver el código de ACM</summary>
+```terraform
+resource "aws_acm_certificate" "cdn" {
+  domain_name       = "cdn.alvarosaavedra.es"
+  validation_method = "DNS"
+}
+```
+</details>
+
+Este certificado tenemos que añadirlo a nuestro DNS como tipo CNAME.
+
+<Callout type="info">
+    Si usas CloudFlare para administrar tu DNS, no marques la opción Redirigido mediante proxy para esta entrada de CNAME.
+</Callout>
+
+Al S3 se accedera unicamente mediante el CloudFront, para ello se crea el recurso `aws_cloudfront_origin_access_control` [OAC (Origin Access Control)](https://aws.amazon.com/es/about-aws/whats-new/2022/08/amazon-cloudfront-origin-access-control/) y se configura en la propiedad `origin_access_control_id` del recurso `aws_cloudfront_distribution`.
+
+<details closed>
+  <summary>Click para ver el código de CloudFront</summary>
+```terraform
+resource "aws_cloudfront_origin_access_control" "s3CDN" {
+  name                              = "S3 access"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
+
+resource "aws_cloudfront_distribution" "s3CDN" {
+  enabled             = true
+  aliases             = [aws_s3_bucket.s3.bucket]
+
+  default_cache_behavior {
+    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
+    cached_methods         = ["GET", "HEAD"]
+    target_origin_id       = aws_s3_bucket.s3.bucket
+    viewer_protocol_policy = "redirect-to-https"
+    compress               = true
+
+    min_ttl     = 86400
+    default_ttl = 604800
+    max_ttl     = 31536000
+
+    forwarded_values {
+      query_string = true
+
+      cookies {
+        forward = "none"
+      }
+    }
+  }
+
+  origin {
+    domain_name              = aws_s3_bucket.s3.bucket_regional_domain_name
+    origin_id                = aws_s3_bucket.s3.bucket
+    origin_access_control_id = aws_cloudfront_origin_access_control.s3CDN.id
+  }
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
+
+  viewer_certificate {
+    acm_certificate_arn      = aws_acm_certificate.cdn.arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2018"
+  }
+
+  depends_on = [aws_s3_bucket.s3, aws_acm_certificate.cdn]
+}
+```
+</details>
+
+Revisa las 3 propiedades `min_ttl, default_ttl y max_ttl`. Configúralas como quieras. En mi caso, como el contenido que voy a guardar aquí no cambiará, he configurado un TTL amplio:
+
+```txt
+min_ttl     = 86400    # 24 horas
+default_ttl = 604800   # 7 días
+max_ttl     = 31536000 # 1 año
+```
+
+### Despliegue
+
+CloudFront puede tardar hasta 10 minutos en crearse. Una vez creado, podemos acceder a nuestro CDN con la URL que nos devuelve el servicio de CloudFront, en este caso `xxxxxxx.cloudfront.net`. Para no tener que acordarnos de esa URL cada vez que queremos acceder a nuestros recursos, vamos a crear un alias en nuestro DNS. Por ejemplo `cdn.alvarosaavedra.es` que apuntará a la URL de CloudFront.
+
+<Callout type="info">
+    Si usas CloudFlare para administrar tu DNS, no marques la opción Redirigido mediante proxy para esta entrada de CNAME. Deja que CloudFront se encargue de la caché.
+</Callout>
+
+### Probar
+
+Si quieres probar si esto funciona puedes hacerlo con esta URL: [https://cdn.alvarosaavedra.es/prueba.txt](https://cdn.alvarosaavedra.es/prueba.txt), con esto estás accediendo a un fichero que está alojado en S3, pero no estás viéndolo a través del S3, sino a través de CloudFront en una localización muy cercana a ti.
+
+<br />
+
+<Image
+  src="https://cdn.alvarosaavedra.es/webpage/alvarosaavedra.es/ArquitecturaCloudFront.webp"
+  alt="Imagen representando la arquitectura de CloudFront"
+  width={800}
+  height={600}
+  quality={100}
+/>
