@@ -17,16 +17,6 @@ export default {
 
     docsRepositoryBase: 'https://github.com/alvarosaavedrau/alvarosaavedra.es',
 
-    banner: {
-        key: 'Página web en construcción',
-        dismissible: false,
-        content: (
-            <a href="https://github.com/alvarosaavedrau/alvarosaavedra.es" target="_blank">
-                🚧 Página web en construcción 🚧
-            </a>
-        )
-    },
-
     darkMode: true,
 
     chat: {
