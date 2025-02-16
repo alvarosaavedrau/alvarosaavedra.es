@@ -99,7 +99,7 @@ resource "aws_acm_certificate" "cdn" {
 Este certificado tenemos que añadirlo a nuestro DNS como tipo CNAME.
 
 <Callout type="info">
-    Si usas CloudFlare para administrar tu DNS, no marques la opción Redirigido mediante proxy para esta entrada de CNAME.
+    Si usas CloudFlare para administrar tu DNS, no marques la opción `Redirigido mediante proxy` para esta entrada de CNAME.
 </Callout>
 
 Al S3 se accedera unicamente mediante el CloudFront, para ello se crea el recurso `aws_cloudfront_origin_access_control` [OAC (Origin Access Control)](https://aws.amazon.com/es/about-aws/whats-new/2022/08/amazon-cloudfront-origin-access-control/) y se configura en la propiedad `origin_access_control_id` del recurso `aws_cloudfront_distribution`.
@@ -174,7 +174,7 @@ max_ttl     = 31536000 # 1 año
 CloudFront puede tardar hasta 10 minutos en crearse. Una vez creado, podemos acceder a nuestro CDN con la URL que nos devuelve el servicio de CloudFront, en este caso `xxxxxxx.cloudfront.net`. Para no tener que acordarnos de esa URL cada vez que queremos acceder a nuestros recursos, vamos a crear un alias en nuestro DNS. Por ejemplo `cdn.alvarosaavedra.es` que apuntará a la URL de CloudFront.
 
 <Callout type="info">
-    Si usas CloudFlare para administrar tu DNS, no marques la opción Redirigido mediante proxy para esta entrada de CNAME. Deja que CloudFront se encargue de la caché.
+    Si usas CloudFlare para administrar tu DNS, no marques la opción `Redirigido mediante proxy` para esta entrada de CNAME. Deja que CloudFront se encargue de la caché.
 </Callout>
 
 ### Probar
