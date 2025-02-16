@@ -29,7 +29,7 @@ export default {
         items: {
             'Cloudflare Workers': {
                 title: 'Cloudflare Workers',
-                href: '/blog/cloudflareworkers',
+                href: '/blog/cloudflare-workers',
             },
             'CDN con CloudFront y S3': {
                 title: 'CDN con CloudFront y S3',
