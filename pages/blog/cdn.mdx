@@ -23,9 +23,7 @@ El código de terraform usado puedes encontrarlo en: [github.com/alvarosaavedrau
 
 ### Creando el S3
 
-El S3 es el servicio que nos permite almacenar los objetos que queremos entregar. Si deseas acceder a los ficheros mediante un dominio personalizado, el nombre del S3 debe ser este nombre de dominio. Si no quieres usar un dominio personalizado y accederás a tus objetos mediante la URL generada por CloudFront, el nombre del S3 puede ser el que tú quieras. En este caso quiero acceder mediante `cdn.alvarosaavedra.es` asi que el nombre de mi S3 será este.
-
-En el S3 tenemos que configurar los permisos adecuados para que el CloudFront pueda acceder a los objetos, es buena práctica configurar los permisos de manera que solo el CloudFront tenga acceso a los objetos.
+El S3 es el servicio que nos permite almacenar los objetos que queremos entregar. Tenemos que configurar los permisos adecuados para que el CloudFront pueda acceder a los objetos, es buena práctica configurar los permisos de manera que solo el CloudFront tenga acceso a los objetos.
 
 <details closed>
   <summary>Click para ver el código de S3 y la política</summary>
