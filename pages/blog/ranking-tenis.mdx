@@ -1,1 +1,26 @@
-# Ranking tenis
+# Resultados de tenis automatizado
+
+En esta página te voy a contar cómo he facilitado / automatizado la consulta de resultados de tenis para un ranking que se celebra en Colmenar Viejo, Madrid.
+
+## ¿Qué facilita esta solución?
+
+La solución que he implementa le facilita al organizador del ranking la consulta de los resultados de los partidos celebrados en cada jornada, estos resultados los utiliza para actualizar el ranking de los jugadores en cada jornada disputada.
+
+Previo a la implementación de esta solución, el resultado de los partidos se enviaba por WhatsApp o correo electrónico, al ser una media de 50 personas en el ranking son 25 partidos por jornada, lo que hace una media de 25 mensajes por jornada, lo que hace que la consulta de los resultados sea tediosa y poco eficiente.
+
+## ¿Cómo funciona?
+
+La solución que he implementado consiste en una web https:://tenis.alvarosaavedra.es, la cual muestra un formulario web donde los jugadores deben introducir su nombre, nombre del contrincante, resultado, etc. esta información se inserta en una dynamoDB mediante una lambda de AWS, la cual se encarga de validar los datos y enviarlos a la base de datos. En dynamoDB se tiene configurado un trigger que llama a otra lambda, la cual se encarga de enviar un correo electrónico al organizador mediante el servicio de SNS, el correo electrónico contiene una lista con la información que se ha registrado en la base de datos.
+
+## Herramientas utilizadas
+
+### Página web
+
+El dominio está registrado en Cloudflare y con todas sus ventajas de CDN y seguridad. La página web está alojada en Vercel, la cual se encarga de desplegar la página web y de servirla a los usuarios.
+
+### Infraestructura en AWS
+
+La lógica de la aplicación está implementada en AWS, utilizando los siguientes servicios:
+- **DynamoDB**: Base de datos NoSQL donde se almacenan los resultados de los partidos, nombre de jugadores y otros datos relevantes.
+- **Lambda**: Funciones serverless que se encargan de validar los datos, guardar en DynamoDB y de enviar el correo electrónico al organizador.
+- **SNS**: Servicio de AWS que se encarga de enviar el correo electrónico al organizador con la información registrada.
