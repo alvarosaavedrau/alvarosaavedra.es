@@ -2,18 +2,20 @@ import Image from 'next/image';
 
 # Resultados de tenis automatizado
 
-En esta página te voy a contar cómo he facilitado / automatizado la gestión de resultados para un ranking de tenis que se celebra en Colmenar Viejo, Madrid.
+En esta página te voy a contar cómo he facilitado y automatizado la gestión de resultados para un ranking de tenis que se celebra en Colmenar Viejo, Madrid.
 
 ## ¿Qué facilita esta solución?
 
-La solución que he implementa le facilita al organizador del ranking la consulta de los resultados de los partidos celebrados en cada jornada, estos resultados los utiliza para actualizar el ranking de los jugadores en cada jornada disputada.
+La solución que he implementado le facilita al organizador del ranking la consulta de los resultados de los partidos disputados en cada jornada. Estos resultados se utilizan para actualizar el ranking de los jugadores.
 
-Previo a la implementación de esta solución, el resultado de los partidos se enviaba por WhatsApp o correo electrónico, al ser una media de 50 personas en el ranking se juegan alrededor de 25 partidos por jornada, lo que hace una media de 25 mensajes por jornada que se envían sin un sistema definido. Lo que hace que la recogida de los resultados de los partidos resulte tediosa y poco eficiente.
+Antes de implementar esta solución, los resultados de los partidos se enviaban por WhatsApp o correo electrónico al organizador. Al haber una media de 50 personas en el ranking, se juegan alrededor de 25 partidos por jornada. Esto supone unos 25 mensajes por jornada enviados sin un sistema establecido, lo que hacía que la recogida de resultados fuese tediosa y poco eficiente.
 
 ## ¿Cómo funciona?
 
-La solución que he implementado consiste en una web **https://tenis.alvarosaavedra.es** la cual muestra un formulario donde los jugadores deben introducir su nombre, nombre del contrincante, resultado, etc. esta información se inserta en una dynamoDB mediante una lambda de AWS, la cual se encarga de validar los datos y enviarlos a la base de datos, además se encarga de enviar un mensaje al SNS, servicio que envía el correo electrónico al organizador.
+La solución que he desarrollado consiste en una web: https://tenis.alvarosaavedra.es, la cual muestra un formulario donde los jugadores deben introducir su nombre, el nombre del contrincante, el resultado, etc.
+Esta información se inserta en una base de datos **DynamoDB** mediante una función **Lambda**, que se encarga de validar los datos y guardarlos. Además, esta función envía un mensaje a **SNS**, un servicio que remite automáticamente un correo electrónico al organizador con los datos registrados.
 
+<br/>
 <Image
   src="https://cdn.alvarosaavedra.es/FormularioRankingTenis.webp"
   alt="Imagen representando el formulario de ranking de tenis"
@@ -26,14 +28,15 @@ La solución que he implementado consiste en una web **https://tenis.alvarosaave
 
 ### Página web
 
-El dominio está registrado en Cloudflare y con todas sus ventajas de CDN y seguridad. La página web está alojada en Vercel, la cual se encarga de desplegar la página web y de servirla a los usuarios.
+El dominio está registrado en Cloudflare, lo que permite aprovechar sus ventajas de CDN y seguridad. La página está alojada en Vercel, que se encarga de desplegarla y servirla a los usuarios.
 
 ### Infraestructura en AWS
 
 La lógica de la aplicación está implementada en AWS, utilizando los siguientes servicios:
-- **DynamoDB**: Base de datos NoSQL donde se almacenan los resultados de los partidos, nombre de jugadores y otros datos relevantes.
-- **Lambda**: Función serverless que se encarga de insertar los datos en la dynamoDB de enviar el correo electrónico mediante SNS.
-- **SNS**: Servicio de AWS que se encarga de enviar el correo electrónico al organizador con la información registrada.
+
+- **DynamoDB**: Base de datos NoSQL donde se almacenan los resultados de los partidos, nombres de jugadores y otros datos relevantes.
+- **Lambda**: Función serverless que inserta los datos en DynamoDB y envía el correo electrónico mediante SNS.
+- **SNS**: Servicio de AWS que envía el correo electrónico al organizador con la información registrada.
 
 <br/>
 <Image
