@@ -46,3 +46,9 @@ La lógica de la aplicación está implementada en AWS, utilizando los siguiente
   height={600}
   quality={100}
 />
+
+## Detalles técnicos
+
+Uno de los aspectos más cómodos de esta solución es que tanto los nombres de los jugadores como el número de jornadas se cargan dinámicamente desde archivos publicados en [GitHub Gist](https://docs.github.com/es/get-started/writing-on-github/editing-and-sharing-content-with-gists/creating-gists).
+
+En el formulario de la web hay dos campos principales: "Tu nombre" y "Contrincante". A medida que se escribe en ellos, se realiza un filtrado automático para facilitar la selección. Los nombres disponibles se obtienen desde un Gist en GitHub, por lo que para añadir nuevos participantes al ranking, simplemente actualizo ese archivo. Lo mismo sucede con el número de jornadas del ranking, lo que me permite gestionar estos datos de forma muy ágil sin necesidad de modificar el código o desplegar de nuevo la aplicación.
