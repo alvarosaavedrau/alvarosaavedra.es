@@ -2,9 +2,9 @@ export default {
     head: (
         <>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <meta property="og:title" content="Álvaro Saavedra de la Peña - Documentación y Recursos" />
+            <meta property="og:title" content="Álvaro Saavedra de la Peña - web personal" />
             <meta property="og:description" content="Encuentra documentación y recursos útiles sobre Kubernetes, Terraform y más, en la página web de Álvaro Saavedra de la Peña Úbeda" />
-            <title>Álvaro Saavedra de la Peña - Documentación y Recursos</title>
+            <title>Álvaro Saavedra de la Peña - web personal</title>
             <meta name="description" content="Encuentra documentación y recursos útiles sobre Kubernetes, Terraform y más, en la página web de Álvaro Saavedra de la Peña Úbeda" />
         </>
     ),
