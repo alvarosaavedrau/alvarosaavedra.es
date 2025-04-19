@@ -34,6 +34,10 @@ export default {
             'CDN con CloudFront y S3': {
                 title: 'CDN con CloudFront y S3',
                 href: '/blog/cdn',
+            },
+            'Resultados de tenis automatizado': {
+                title: 'Resultados de tenis automatizado',
+                href: '/blog/ranking-tenis',
             }
         }
     },

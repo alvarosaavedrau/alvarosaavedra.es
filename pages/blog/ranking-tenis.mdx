@@ -1,0 +1,51 @@
+# Resultados de tenis automatizado
+
+En esta página te voy a contar cómo he facilitado y automatizado la gestión de resultados para un ranking de tenis que se celebra en Colmenar Viejo, Madrid.
+
+## ¿Qué facilita esta solución?
+
+La solución que he implementado le facilita al organizador del ranking la consulta de los resultados de los partidos disputados en cada jornada. Estos resultados se utilizan para actualizar el ranking de los jugadores.
+
+Antes de implementar esta solución, los resultados de los partidos se enviaban por WhatsApp o correo electrónico al organizador. Al haber una media de 50 personas en el ranking, se juegan alrededor de 25 partidos por jornada. Esto supone unos 25 mensajes por jornada enviados sin un sistema establecido, lo que hacía que la recogida de resultados fuese tediosa y poco eficiente.
+
+## ¿Cómo funciona?
+
+La solución que he desarrollado consiste en una web: https://tenis.alvarosaavedra.es, la cual muestra un formulario donde los jugadores deben introducir su nombre, el nombre del contrincante, el resultado, etc.
+Esta información se inserta en una base de datos **DynamoDB** mediante una función **Lambda**, que se encarga de validar los datos y guardarlos. Además, esta función envía un mensaje a **SNS**, un servicio que remite automáticamente un correo electrónico al organizador con los datos registrados.
+
+<br/>
+<img
+  src="https://cdn.alvarosaavedra.es/FormularioRankingTenis.webp"
+  alt="Imagen representando el formulario de ranking de tenis"
+  style={{
+    display: 'block',
+    margin: '0 auto',
+    maxWidth: '400px',
+    width: '100%',
+    height: 'auto',
+  }}
+/>
+
+## Herramientas utilizadas
+
+### Página web
+
+El dominio está registrado en Cloudflare, lo que permite aprovechar sus ventajas de CDN y seguridad. La página está alojada en Vercel, que se encarga de desplegarla y servirla a los usuarios.
+
+### Infraestructura en AWS
+
+La lógica de la aplicación está implementada en AWS, utilizando los siguientes servicios:
+
+- **DynamoDB**: Base de datos NoSQL donde se almacenan los resultados de los partidos, nombres de jugadores y otros datos relevantes.
+- **S3**: Se guarda un archivo CSV por jornada con los datos de los partidos, permitiendo conservar un respaldo legible y fácilmente exportable de la información registrada.
+- **Lambda**: Función serverless que inserta los datos en DynamoDB y envía el correo electrónico mediante SNS.
+- **SNS**: Servicio de AWS que envía el correo electrónico al organizador con la información registrada.
+
+<br/>
+<img src="https://cdn.alvarosaavedra.es/ArquitecturaRankingTenis.webp" alt="Imagen representando la arquitectura de la solución" />
+
+## Detalles técnicos
+
+Uno de los aspectos más cómodos de esta solución es que tanto los nombres de los jugadores como el número de jornadas se cargan dinámicamente desde archivos publicados en [GitHub Gist](https://docs.github.com/es/get-started/writing-on-github/editing-and-sharing-content-with-gists/creating-gists).
+
+En el formulario de la web hay dos campos principales: "Tu nombre" y "Contrincante". A medida que se escribe en ellos, se realiza un filtrado automático para facilitar la selección (de esta manera me aseguro que el nombre de los jugadores se guarda siempre de la misma forma). Los nombres disponibles se obtienen desde un Gist en GitHub, por lo que para añadir nuevos participantes al ranking, simplemente hay que actualizar ese fichero de GitHub. Lo mismo sucede con el número de jornadas del ranking, lo que me permite gestionar estos datos de forma muy ágil sin necesidad de modificar el código o desplegar de nuevo la aplicación.
