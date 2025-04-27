@@ -53,7 +53,7 @@ export default {
     },
     CV: {
         title: 'Currículum',
-        href: 'https://alvarosaavedra.cloud',
+        href: 'https://cv.alvarosaavedra.es',
         newWindow: true
     }
 }
