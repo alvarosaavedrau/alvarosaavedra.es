@@ -27,10 +27,6 @@ export default {
         title: 'Blog',
         type: 'menu',
         items: {
-            'Cloudflare Workers': {
-                title: 'Cloudflare Workers',
-                href: '/blog/cloudflare-workers',
-            },
             'CDN con CloudFront y S3': {
                 title: 'CDN con CloudFront y S3',
                 href: '/blog/cdn',
