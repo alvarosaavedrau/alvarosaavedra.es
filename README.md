@@ -1,6 +1,6 @@
 # alvarosaavedra.es
 
-Página web de Álvaro Saavedra de la Peña Úbeda, usada para documentar cosas del día a día. Nada profesional.
+Página web de Álvaro Saavedra de la Peña Úbeda, usada para documentar cosas del día a día.
 
 ## 🚀 Inicio
 
