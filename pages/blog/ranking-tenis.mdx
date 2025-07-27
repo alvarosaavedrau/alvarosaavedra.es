@@ -10,7 +10,7 @@ Antes de implementar esta solución, los resultados de los partidos se enviaban 
 
 ## ¿Cómo funciona?
 
-La solución que he desarrollado consiste en una web: https://ranking.alvarosaavedra.es **(Página en pruebas, temporalmente caída)**, la cual muestra un formulario donde los jugadores deben introducir su nombre, el nombre del contrincante, el resultado, etc.
+La solución que he desarrollado consiste en una web: https://ranking.alvarosaavedra.es ***(página en pruebas, temporalmente caída)***, la cual muestra un formulario donde los jugadores deben introducir su nombre, el nombre del contrincante, el resultado, etc.
 Esta información se inserta en una base de datos **DynamoDB** mediante una función **Lambda**, que se encarga de validar los datos y guardarlos. Además, esta función envía un mensaje a **SNS**, un servicio que remite automáticamente un correo electrónico al organizador con los datos registrados.
 
 <br/>
