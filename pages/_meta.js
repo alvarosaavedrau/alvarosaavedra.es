@@ -34,6 +34,10 @@ export default {
             'Resultados de tenis automatizado': {
                 title: 'Resultados de tenis automatizado',
                 href: '/blog/ranking-tenis',
+            },
+            'Uptime Monitor': {
+                title: 'Uptime Monitor',
+                href: '/blog/uptime-monitor',
             }
         }
     },

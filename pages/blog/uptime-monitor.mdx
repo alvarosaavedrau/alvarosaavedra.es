@@ -1,0 +1,91 @@
+# Uptime Monitor notification
+
+## Introducción
+Este proyecto tiene como objetivo recibir notificaciones de caídas de sitios web monitorizados mediante [Uptime Monitor](https://uptime-monitor.io) y enviarlas a un canal de Telegram utilizando AWS.
+
+Uptime Monitor permite notificaciones por correo electrónico, pero su plan gratuito limita estas notificaciones a 10 diarias. Para superar esta limitación, he implementado una solución que utiliza un webhook personalizado para recibir todas las notificaciones y enviarlas a Telegram.
+
+## Arquitectura
+Para lograr este objetivo he diseñado una arquitectura serverless en AWS que incluye los siguientes componentes:
+- **Uptime Monitor**: Envía notificaciones a un webhook personalizado cuando se detectan caídas en los sitios monitorizados.
+- **API Gateway**: Recibe las solicitudes del webhook de Uptime Monitor y las dirige a una función Lambda.
+- **Lambda webhook**: Procesa las solicitudes entrantes, valida los datos y envía el mensaje a una cola SQS.
+- **SQS (Simple Queue Service)**: Almacena los mensajes y los entrega a otra función Lambda para su procesamiento.
+- **Lambda processor**: Lee los mensajes de la cola SQS, almacena en DynamoDB ciertos datos y envía las notificaciones a través de Telegram utilizando un bot.
+
+<br/>
+<img
+  src="https://cdn.alvarosaavedra.es/UptimeMonitor/UptimeMonitorArquitectura.webp"
+  alt="Imagen representando la infraestructura de notificaciones de Uptime Monitor"
+  style={{
+    display: 'block',
+    margin: '0 auto',
+    maxWidth: '1000px',
+    width: '100%',
+    height: 'auto',
+  }}
+/>
+
+Una pregunta que te puedes hacer es **por qué usar SQS entre las dos Lambdas y no tener una sola lambda que haga todo el procesamiento**. La razón principal es garantizar la fiabilidad del sistema: si por alguna razón la Lambda que envía las notificaciones a Telegram falla (por ejemplo, si la API de Telegram está caída), los mensajes no se perderán, sino que permanecerán en la cola SQS hasta que puedan ser procesados correctamente. También permite manejar picos de notificaciones sin sobrecargar la Lambda de procesamiento, para este proyecto nunca se va a dar un volumen tan alto de notificaciones pero de esta manera la infraestructura está preparada para futuros posibles picos.
+
+## Flujo de eventos paso a paso
+- **Paso 1**: Uptime Monitor envía el POST al endpoint /webhook.
+- **Paso 2**: API Gateway recibe la petición y la pasa a la primera Lambda.
+- **Paso 3**: Lambda 1 valida origen y contenido, y publica en SQS.
+- **Paso 4**: SQS desencadena la segunda Lambda cuando hay mensajes.
+- **Paso 5**: Lambda 2 almacena ciertos datos en DynamoDB y envía la notificación a Telegram.
+
+## Costes y optimización
+Dado que la solución está basada en servicios serverless de AWS, los costes son mínimos y escalables según el uso. Todos los servicios utilizados tienen un nivel gratuito que cubre las necesidades básicas del proyecto.
+
+## Prueba de funcionamiento
+Para probar el funcionamiento de la infraestructura, he utilizado la funcionalidad de "Test Notification" que ofrece Uptime Monitor. Al activar esta opción, se envía una notificación de prueba al webhook configurado, lo que permite verificar que todo el flujo de eventos funciona correctamente y que la notificación llega al canal de Telegram.
+
+Envío de notificación de prueba desde Uptime Monitor:
+
+<br/>
+<img
+  src="https://cdn.alvarosaavedra.es/UptimeMonitor/UptimeMonitorTestContact.webp"
+  alt="Imagen representando la infraestructura de notificaciones de Uptime Monitor"
+  style={{
+    display: 'block',
+    margin: '0 auto',
+    maxWidth: '1000px',
+    width: '100%',
+    height: 'auto',
+  }}
+/>
+
+Gráficos mostrando la petición recibida en API Gateway y el procesamiento en las Lambdas y SQS:
+
+<br/>
+<img
+  src="https://cdn.alvarosaavedra.es/UptimeMonitor/UptimeMonitorTest.webp"
+  alt="Imagen representando la infraestructura de notificaciones de Uptime Monitor"
+  style={{
+    display: 'block',
+    margin: '0 auto',
+    maxWidth: '1000px',
+    width: '100%',
+    height: 'auto',
+  }}
+/>
+
+Recepción de la notificación en Telegram:
+
+<br/>
+<img
+  src="https://cdn.alvarosaavedra.es/UptimeMonitor/UptimeMonitorTestTelegram.webp"
+  alt="Imagen representando la infraestructura de notificaciones de Uptime Monitor"
+  style={{
+    display: 'block',
+    margin: '0 auto',
+    maxWidth: '350px',
+    width: '100%',
+    height: 'auto',
+  }}
+/>
+
+## Posibles mejoras futuras
+1. Enviar a varios canales (varios chats, email, Slack).
+2. Añadir panel en DynamoDB + alguna UI para ver histórico de caídas.
