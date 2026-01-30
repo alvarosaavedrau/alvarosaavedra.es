@@ -1,14 +1,6 @@
-export default {
-    head: (
-        <>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <meta property="og:title" content="Álvaro Saavedra de la Peña - web personal" />
-            <meta property="og:description" content="Encuentra documentación y recursos útiles sobre Kubernetes, Terraform y más, en la página web de Álvaro Saavedra de la Peña Úbeda" />
-            <title>Álvaro Saavedra de la Peña - web personal</title>
-            <meta name="description" content="Encuentra documentación y recursos útiles sobre Kubernetes, Terraform y más, en la página web de Álvaro Saavedra de la Peña Úbeda" />
-        </>
-    ),
+import { useConfig } from 'nextra-theme-docs'
 
+export default {
     logo: <span>alvarosaavedra.es</span>,
 
     project: {
@@ -22,7 +14,7 @@ export default {
     chat: {
         link: 'https://www.linkedin.com/in/alvaro-saavedra/',
         icon: (
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-linkedin">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-brand-linkedin">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                 <path d="M8 11v5" />
                 <path d="M8 8v.01" />
@@ -35,14 +27,8 @@ export default {
 
     faviconGlyph: '☁️',
 
-    color: {
-        hue: 0,
-        saturation: 0,
-        lightness: {
-            dark: 100,
-            light: 50
-        }
-    },
+    primaryHue: 0,
+    primarySaturation: 0,
 
     feedback: {
         content: 'Dame feedback en GitHub 🔗',
@@ -54,13 +40,23 @@ export default {
     },
 
     toc: {
-        backToTop: function BackToTop() {
-            return (
-                <a href="#table-of-contents">
-                    Volver arriba
-                </a>
-            )
-        },
+        backToTop: true,
         float: true
+    },
+    
+    head: function useHead() {
+        const config = useConfig()
+        const title = config.title ? `${config.title} - alvarosaavedra.es` : 'Álvaro Saavedra de la Peña - web personal'
+        const description = config.frontMatter.description || 'Encuentra documentación y recursos útiles sobre Kubernetes, Terraform y más, en la página web de Álvaro Saavedra de la Peña Úbeda'
+        
+        return (
+            <>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <meta property="og:title" content={title} />
+                <meta property="og:description" content={description} />
+                <meta name="description" content={description} />
+                <title>{title}</title>
+            </>
+        )
     }
 }
