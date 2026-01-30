@@ -13,6 +13,9 @@ export const metadata = {
     template: 'alvarosaavedra.es'
   },
   description: 'Encuentra documentación y recursos útiles sobre Kubernetes, Terraform y más, en la página web de Álvaro Saavedra de la Peña Úbeda',
+  icons: {
+    icon: '/favicon.svg',
+  },
   openGraph: {
     title: 'Álvaro Saavedra de la Peña - web personal',
     description: 'Encuentra documentación y recursos útiles sobre Kubernetes, Terraform y más, en la página web de Álvaro Saavedra de la Peña Úbeda',
@@ -52,7 +55,6 @@ export default async function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <Head
-        faviconGlyph="☁️"
         color={{
           hue: { dark: 0, light: 0 },
           saturation: { dark: 0, light: 0 }
