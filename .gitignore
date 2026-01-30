@@ -1,5 +1,6 @@
 node_modules
 package-lock.json
 .next
+out
 pnpm-lock.yaml
 .DS_Store

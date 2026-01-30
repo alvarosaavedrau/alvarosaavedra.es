@@ -24,7 +24,7 @@ El código de terraform usado puedes encontrarlo en: [github.com/alvarosaavedrau
 
 El S3 es el servicio que nos permite almacenar los objetos que queremos entregar. Tenemos que configurar los permisos adecuados para que el CloudFront pueda acceder a los objetos, es buena práctica configurar los permisos de manera que solo el CloudFront tenga acceso a los objetos.
 
-<details closed>
+<details closed="true">
   <summary>Click para ver el código de S3 y la política</summary>
 ```terraform
 resource "aws_s3_bucket" "s3" {
@@ -83,7 +83,7 @@ data "aws_iam_policy_document" "s3CDNPolicy" {
 
 AWS nos permite crear un certificado de manera gratuita con el servicio [ACM](https://aws.amazon.com/es/certificate-manager/).
 
-<details closed>
+<details closed="true">
   <summary>Click para ver el código de ACM</summary>
 ```terraform
 resource "aws_acm_certificate" "cdn" {
@@ -101,7 +101,7 @@ Este certificado tenemos que añadirlo a nuestro DNS como tipo CNAME.
 
 Al S3 se accedera unicamente mediante el CloudFront, para ello se crea el recurso `aws_cloudfront_origin_access_control` [OAC (Origin Access Control)](https://aws.amazon.com/es/about-aws/whats-new/2022/08/amazon-cloudfront-origin-access-control/) y se configura en la propiedad `origin_access_control_id` del recurso `aws_cloudfront_distribution`.
 
-<details closed>
+<details closed="true">
   <summary>Click para ver el código de CloudFront</summary>
 ```terraform
 resource "aws_cloudfront_origin_access_control" "s3CDN" {
