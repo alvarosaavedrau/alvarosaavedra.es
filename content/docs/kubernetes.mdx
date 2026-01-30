@@ -8,7 +8,7 @@ Esta página está dedicada a almacenar yamls e información útil sobre Kuberne
 
 Los namespace se usan para organizar los recursos de Kubernetes. Si se tienen varios proyectos o equipos trabajando en un mismo cluster, es recomendable usar namespaces para separar los recursos.
 
-<details closed>
+<details closed="true">
   <summary>Click para ver</summary>
 ```yaml showLineNumbers
 apiVersion: v1
@@ -22,7 +22,7 @@ metadata:
 
 El deployment es un controlador de Kubernetes que administra un conjunto de replicas de un pod.
 
-<details closed>
+<details closed="true">
   <summary>Click para ver</summary>
 ```yaml showLineNumbers
 apiVersion: apps/v1
@@ -51,7 +51,7 @@ spec:
 
 El servicio es un recurso de Kubernetes que expone una aplicación a través de una dirección IP (interna del cluster) y un puerto.
 
-<details closed>
+<details closed="true">
   <summary>Click para ver</summary>
 ```yaml showLineNumbers
 apiVersion: v1
@@ -73,7 +73,7 @@ spec:
 
 Un pod es la unidad más pequeña de Kubernetes, que puede contener uno o varios contenedores.
 
-<details closed>
+<details closed="true">
   <summary>Click para ver</summary>
 ```yaml showLineNumbers
 apiVersion: v1
@@ -95,7 +95,7 @@ spec:
 
 El ReplicaSet es un controlador de Kubernetes que garantiza que un número específico de réplicas de un pod estén en funcionamiento en todo momento.
 
-<details closed>
+<details closed="true">
   <summary>Click para ver</summary>
 ```yaml showLineNumbers
 apiVersion: apps/v1
@@ -126,7 +126,7 @@ spec:
 
 El DaemonSet es un controlador de Kubernetes que garantiza que todos los nodos del clúster ejecuten una copia de un pod. Es útil para tareas de monitoreo o logging.
 
-<details closed>
+<details closed="true">
   <summary>Click para ver</summary>
 ```yaml showLineNumbers
 apiVersion: apps/v1
