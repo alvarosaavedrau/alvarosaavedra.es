@@ -10,7 +10,7 @@ import 'nextra-theme-docs/style.css'
 export const metadata = {
   title: {
     default: 'Álvaro Saavedra de la Peña - web personal',
-    template: '%s - alvarosaavedra.es'
+    template: 'alvarosaavedra.es'
   },
   description: 'Encuentra documentación y recursos útiles sobre Kubernetes, Terraform y más, en la página web de Álvaro Saavedra de la Peña Úbeda',
   openGraph: {
