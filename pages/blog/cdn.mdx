@@ -18,8 +18,6 @@ Vamos a empezar a jugar, vamos a ver como crear un CDN con [CloudFront](https://
 
 Cuando despleguemos el CloudFront nos entregará una URL (xxxxxxx.cloudfront.net), esta es la URL que tenemos que usar para acceder a nuestros objetos.
 
-El código de terraform usado puedes encontrarlo en: [github.com/alvarosaavedrau/cdn.alvarosaavedra.es](https://github.com/alvarosaavedrau/cdn.alvarosaavedra.es)
-
 ### Creando el S3
 
 El S3 es el servicio que nos permite almacenar los objetos que queremos entregar. Tenemos que configurar los permisos adecuados para que el CloudFront pueda acceder a los objetos, es buena práctica configurar los permisos de manera que solo el CloudFront tenga acceso a los objetos.
