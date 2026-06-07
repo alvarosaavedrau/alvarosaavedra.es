@@ -46,11 +46,6 @@ export default {
         href: '/links',
         newWindow: false
     },
-    publicIp: {
-        title: 'Cuál es mi IP',
-        href: 'https://ip.alvarosaavedra.es',
-        newWindow: true
-    },
     CV: {
         title: 'Currículum',
         href: 'https://cv.alvarosaavedra.es',
