@@ -5,24 +5,6 @@ export default {
     index: {
         title: 'Inicio',
     },
-    docs: {
-        title: 'Documentación',
-        type: 'menu',
-        items: {
-            terraform: {
-                title: 'Terraform',
-                href: '/docs/terraform',
-            },
-            kubernetes: {
-                title: 'Kubernetes',
-                href: '/docs/kubernetes'
-            },
-            git: {
-                title: 'Git',
-                href: '/docs/git'
-            }
-        }
-    },
     blog: {
         title: 'Blog',
         type: 'menu',
@@ -38,6 +20,24 @@ export default {
             'Uptime Monitor': {
                 title: 'Uptime Monitor',
                 href: '/blog/uptime-monitor',
+            }
+        }
+    },
+    docs: {
+        title: 'Documentación',
+        type: 'menu',
+        items: {
+            terraform: {
+                title: 'Terraform',
+                href: '/docs/terraform',
+            },
+            kubernetes: {
+                title: 'Kubernetes',
+                href: '/docs/kubernetes'
+            },
+            git: {
+                title: 'Git',
+                href: '/docs/git'
             }
         }
     },
