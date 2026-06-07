@@ -17,7 +17,7 @@ export default {
             'Slug - URL shortener': {
                 title: 'Slug - URL shortener',
                 href: 'https://slug.alvarosaavedra.es',
-                newWindow: trueu
+                newWindow: true
             }
         }
     },
