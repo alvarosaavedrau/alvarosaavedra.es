@@ -5,6 +5,22 @@ export default {
     index: {
         title: 'Inicio',
     },
+    Herramientas: {
+        title: 'Herramientas',
+        type: 'menu',
+        items: {
+            'Obtener IP pública': {
+                title: 'Obtener IP pública',
+                href: 'https://ip.alvarosaavedra.es',
+                newWindow: true
+            },
+            'Slug - URL shortener': {
+                title: 'Slug - URL shortener',
+                href: 'https://slug.alvarosaavedra.es',
+                newWindow: trueu
+            }
+        }
+    },
     blog: {
         title: 'Blog',
         type: 'menu',
