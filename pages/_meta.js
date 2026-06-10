@@ -16,7 +16,7 @@ export default {
             },
             'Slug - URL shortener': {
                 title: 'Slug - URL shortener',
-                href: 'https://slug.alvarosaavedra.es',
+                href: 'https://ucut.pro',
                 newWindow: true
             }
         }
