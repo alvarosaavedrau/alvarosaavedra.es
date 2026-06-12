@@ -1,13 +1,66 @@
-export default {
-    head: (
+import { useRouter } from 'next/router'
+
+const BASE_URL = 'https://alvarosaavedra.es'
+
+function Head() {
+    const { asPath } = useRouter()
+    const canonicalUrl = `${BASE_URL}${asPath.split('?')[0]}`
+
+    const isHome = asPath === '/'
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: 'Álvaro Saavedra de la Peña',
+        url: BASE_URL,
+        jobTitle: 'DevOps Engineer',
+        sameAs: [
+            'https://github.com/alvarosaavedrau/alvarosaavedra.es',
+            'https://www.linkedin.com/in/alvaro-saavedra/'
+        ]
+    }
+
+    return (
         <>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <meta name="description" content="Encuentra documentación y recursos útiles sobre Kubernetes, Terraform y más, en la página web de Álvaro Saavedra de la Peña Úbeda" />
+
+            {/* Open Graph */}
+            <meta property="og:type" content="website" />
+            <meta property="og:site_name" content="Álvaro Saavedra de la Peña" />
             <meta property="og:title" content="Álvaro Saavedra de la Peña - web personal" />
             <meta property="og:description" content="Encuentra documentación y recursos útiles sobre Kubernetes, Terraform y más, en la página web de Álvaro Saavedra de la Peña Úbeda" />
-            <title>Álvaro Saavedra de la Peña - web personal</title>
-            <meta name="description" content="Encuentra documentación y recursos útiles sobre Kubernetes, Terraform y más, en la página web de Álvaro Saavedra de la Peña Úbeda" />
+            <meta property="og:image" content={`${BASE_URL}/og-image.png`} />
+            <meta property="og:image:width" content="1200" />
+            <meta property="og:image:height" content="630" />
+            <meta property="og:url" content={canonicalUrl} />
+            <meta property="og:locale" content="es_ES" />
+
+            {/* Twitter Card */}
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content={`${BASE_URL}/og-image.png`} />
+
+            {/* Canonical */}
+            <link rel="canonical" href={canonicalUrl} />
+
+            {/* Icons & PWA */}
+            <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+            <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+            <link rel="manifest" href="/site.webmanifest" />
+
+            {/* Structured data */}
+            {isHome && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                />
+            )}
         </>
-    ),
+    )
+}
+
+export default {
+    head: Head,
 
     logo: <span>alvarosaavedra.es</span>,
 
