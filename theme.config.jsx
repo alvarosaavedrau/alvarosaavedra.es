@@ -1,12 +1,27 @@
 import { useRouter } from 'next/router'
+import { useConfig } from 'nextra-theme-docs'
 
 const BASE_URL = 'https://alvarosaavedra.es'
+const SITE_NAME = 'Álvaro Saavedra de la Peña'
+const DEFAULT_DESCRIPTION = 'Encuentra documentación y recursos útiles sobre Kubernetes, Terraform y más, en la página web de Álvaro Saavedra de la Peña Úbeda'
 
 function Head() {
     const { asPath } = useRouter()
+    const { title, frontMatter } = useConfig()
     const canonicalUrl = `${BASE_URL}${asPath.split('?')[0]}`
 
     const isHome = asPath === '/'
+
+    const pageTitle = isHome
+        ? `${SITE_NAME} - DevOps Engineer en Madrid`
+        : `${title} | ${SITE_NAME}`
+
+    const description = frontMatter?.description || DEFAULT_DESCRIPTION
+
+    const ogTitle = isHome
+        ? `${SITE_NAME} - web personal`
+        : `${title} | ${SITE_NAME}`
+
     const jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'Person',
@@ -21,23 +36,31 @@ function Head() {
 
     return (
         <>
+            <title>{pageTitle}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <meta name="description" content="Encuentra documentación y recursos útiles sobre Kubernetes, Terraform y más, en la página web de Álvaro Saavedra de la Peña Úbeda" />
+            <meta name="description" content={description} />
 
             {/* Open Graph */}
             <meta property="og:type" content="website" />
-            <meta property="og:site_name" content="Álvaro Saavedra de la Peña" />
-            <meta property="og:title" content="Álvaro Saavedra de la Peña - web personal" />
-            <meta property="og:description" content="Encuentra documentación y recursos útiles sobre Kubernetes, Terraform y más, en la página web de Álvaro Saavedra de la Peña Úbeda" />
+            <meta property="og:site_name" content={SITE_NAME} />
+            <meta property="og:title" content={ogTitle} />
+            <meta property="og:description" content={description} />
             <meta property="og:image" content={`${BASE_URL}/og-image.png`} />
+            <meta property="og:image:type" content="image/png" />
             <meta property="og:image:width" content="1200" />
             <meta property="og:image:height" content="630" />
+            <meta property="og:image:alt" content={`${SITE_NAME} - DevOps Engineer`} />
             <meta property="og:url" content={canonicalUrl} />
             <meta property="og:locale" content="es_ES" />
 
             {/* Twitter Card */}
             <meta name="twitter:card" content="summary_large_image" />
+            {/* TODO: replace with your actual X/Twitter handle */}
+            <meta name="twitter:site" content="@aspu_" />
+            <meta name="twitter:title" content={ogTitle} />
+            <meta name="twitter:description" content={description} />
             <meta name="twitter:image" content={`${BASE_URL}/og-image.png`} />
+            <meta name="twitter:image:alt" content={`${SITE_NAME} - DevOps Engineer`} />
 
             {/* Canonical */}
             <link rel="canonical" href={canonicalUrl} />
