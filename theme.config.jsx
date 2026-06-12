@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 
 const BASE_URL = 'https://alvarosaavedra.es'
+const OG_IMAGE = 'https://cdn.alvarosaavedra.es/og-image.png'
 
 function Head() {
     const { asPath } = useRouter()
@@ -29,7 +30,7 @@ function Head() {
             <meta property="og:site_name" content="Álvaro Saavedra de la Peña" />
             <meta property="og:title" content="Álvaro Saavedra de la Peña - web personal" />
             <meta property="og:description" content="Encuentra documentación y recursos útiles sobre Kubernetes, Terraform y más, en la página web de Álvaro Saavedra de la Peña Úbeda" />
-            <meta property="og:image" content={`${BASE_URL}/og-image.png`} />
+            <meta property="og:image" content={OG_IMAGE} />
             <meta property="og:image:width" content="1200" />
             <meta property="og:image:height" content="630" />
             <meta property="og:url" content={canonicalUrl} />
@@ -37,7 +38,7 @@ function Head() {
 
             {/* Twitter Card */}
             <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:image" content={`${BASE_URL}/og-image.png`} />
+            <meta name="twitter:image" content={OG_IMAGE} />
 
             {/* Canonical */}
             <link rel="canonical" href={canonicalUrl} />
