@@ -1,0 +1,22 @@
+{
+    "name": "Álvaro Saavedra de la Peña",
+    "short_name": "alvarosaavedra.es",
+    "description": "Encuentra documentación y recursos útiles sobre Kubernetes, Terraform y más",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "lang": "es",
+    "icons": [
+        {
+            "src": "/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "/favicon-32x32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        }
+    ]
+}
