@@ -11,13 +11,11 @@ export default {
         items: {
             'Obtener IP pública': {
                 title: 'Obtener IP pública',
-                href: 'https://ip.alvarosaavedra.es',
-                newWindow: true
+                href: 'https://ip.alvarosaavedra.es'
             },
             'Slug - URL shortener': {
                 title: 'Slug - URL shortener',
-                href: 'https://ucut.pro',
-                newWindow: true
+                href: 'https://ucut.pro'
             }
         }
     },
@@ -59,12 +57,10 @@ export default {
     },
     links: {
         title: 'Enlaces útiles',
-        href: '/links',
-        newWindow: false
+        href: '/links'
     },
     CV: {
         title: 'Currículum',
-        href: 'https://cv.alvarosaavedra.es',
-        newWindow: true
+        href: 'https://cv.alvarosaavedra.es'
     }
 }
