@@ -13,8 +13,8 @@ export default {
                 title: 'Obtener IP pública',
                 href: 'https://ip.alvarosaavedra.es'
             },
-            'Slug - URL shortener': {
-                title: 'Slug - URL shortener',
+            'Acortador de URLs': {
+                title: 'Acortador de URLs',
                 href: 'https://ucut.pro'
             }
         }
