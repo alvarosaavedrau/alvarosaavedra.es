@@ -58,9 +58,5 @@ export default {
     links: {
         title: 'Enlaces útiles',
         href: '/links'
-    },
-    CV: {
-        title: 'Currículum',
-        href: 'https://cv.alvarosaavedra.es'
     }
 }
